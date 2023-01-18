@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport"
+			content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>首页</title>
+		<script src="../../../../js/mui.min.js"></script>
+		<script src="../../../../js/mui.js"></script>
+		<link href="../../../../css/mui.min.css" rel="stylesheet" />
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+		</script>
+	</head>
+
+	<style>
+		* {
+			box-sizing: border-box;
+		}
+
+		html {
+			height: 100%;
+			width: 100%;
+			/* 根元素 */
+			font-size: 100px;
+			color: #333333;
+		}
+
+		body {
+			height: 100%;
+			width: 100%;
+			font-size: 0.13rem;
+			margin: 0;
+			background: #f6f6f6;
+			display: flex;
+			flex-direction: column;
+			/* 页面不能滚动 */
+			overflow: hidden;
+		}
+
+		#app {
+			height: 100%;
+			width: 100%;
+			background: #f6f6f6;
+			display: flex;
+			flex-direction: column;
+		}
+
+		.title-bg {
+			width: 100%;
+			min-height: 0.44rem;
+
+			position: relative;
+			top: 0;
+			left: 0;
+			z-index: 998;
+
+			background-color: white;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			color: black;
+			font-size: 0.16rem;
+			font-weight: bold;
+			border-bottom: 0.01rem #f6f6f6 solid;
+
+		}
+
+		.title-arrow {
+			position: absolute;
+			left: 0.10rem;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.title-img {
+			width: 0.26rem;
+		}
+
+		.content {
+			height: 100%;
+			width: 100%;
+			font-size: 0.15rem;
+			/* 页面能滚动 */
+			overflow: scroll;
+		}
+	</style>
+
+	<body>
+		<div class="title-bg">
+			<div class="title-arrow">
+				<img src="../../../../images/icons/appmainlogo/logo.png" class="title-img" />
+			</div>
+			<div class="title-tx">星悦·榜单</div>
+		</div>
+
+		<p>榜单</p>
+
+
+	</body>
+
+</html>

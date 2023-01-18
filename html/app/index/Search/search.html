@@ -1,0 +1,207 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport"
+			content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../../../css/mui.css" rel="stylesheet" />
+		<link href="../../../../css/mui.min.css" rel="stylesheet" />
+	</head>
+	<style>
+		* {
+			touch-action: none;
+		}
+	</style>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title" id="title">搜索页面</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-card">
+				<div class="mui-card-footer">歌曲搜索结果：</div>
+				<div class="mui-card-content">
+					<ul class="mui-table-view" id="zjgq">
+
+					</ul>
+				</div>
+			</div>
+			<div class="mui-card">
+				<!--页眉，放置标题-->
+				<div class="mui-card-header mui-card-media">
+					<img src="../../../../images/icons/appmainlogo/logo.png" id="gqtp" />
+					<div class="mui-media-body">
+						当前正在播放：
+						<p id="gqmz">还没有播放呢~请选择要播放的内容~</p>
+
+					</div>
+				</div>
+				<!--内容区-->
+				<div class="mui-card-footer">
+					<button type="button" class="mui-btn mui-btn-primary" onclick="resume()">继续</button>
+					<button type="button" class="mui-btn mui-btn-primary" onclick="pause()">暂停</button>
+					<button type="button" class="mui-btn mui-btn-primary" onclick="stop()">停止</button>
+				</div>
+				<div class="mui-card-footer">歌词、进度条等内容正在制作啦~
+				</div>
+			</div>
+		</div>
+
+
+		<script src="../../../../js/mui.js"></script>
+		<script src="../../../../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function() {
+				var lrc1 = null
+				var self = plus.webview.currentWebview();
+				var keyword = self.keyword;
+				plus.nativeUI.showWaiting("搜索歌曲中...");
+				mui.ajax('https://api.gmit.vip/Api/Music?format=json&page=1', {
+					data: {
+						site: 'netease',
+						text: keyword
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						if (data.msg == '搜索成功') {
+							setTimeout(function() {
+								var ia = -1
+								var lah = data.data
+								var table = document.body.querySelector('.mui-table-view');
+								var cells = document.body.querySelectorAll('.mui-table-view-cell');
+								document.getElementById('gqtp').src = lah[0].pic
+								document.getElementById('gqmz').innerHTML = lah[0].title
+								for (var i = cells.length, len = i + 7; i < len; i++) {
+									var lah3 = lah[ia + 1]
+									var li = document.createElement('li');
+									li.className = 'mui-table-view-cell';
+									li.innerHTML =
+										'<a class="mui-navigate-right" onclick=dkgq("' +
+										lah3.url +
+										'")>' +
+										lah3.title + '-----' + lah3.author +
+										'</a>';
+									table.appendChild(li);
+									var ia = ia + 1
+
+
+								}
+
+								plus.nativeUI.closeWaiting();
+							}, 1000);
+
+						} else {
+							plus.nativeUI.closeWaiting();
+							mui.toast('线路1搜索失败！更换线路2！');
+
+							mui.ajax('https://api.gmit.vip/Api/Music?format=json&page=1', {
+								data: {
+									site: 'kugou',
+									text: keyword
+								},
+								dataType: 'json', //服务器返回json格式数据
+								type: 'get', //HTTP请求类型
+								timeout: 10000, //超时时间设置为10秒；
+								success: function(data) {
+									if (data.msg == '搜索成功') {
+										plus.nativeUI.showWaiting("搜索歌曲中(线路2)...");
+										setTimeout(function() {
+											var ia = -1
+											var lah = data.data
+											var table = document.body.querySelector(
+												'.mui-table-view');
+											var cells = document.body.querySelectorAll(
+												'.mui-table-view-cell');
+											document.getElementById('gqtp').src = lah[0]
+												.pic
+											document.getElementById('gqmz').innerHTML =
+												lah[0].title
+											for (var i = cells.length, len = i + 7; i <
+												len; i++) {
+												var lah3 = lah[ia + 1]
+												var li = document.createElement('li');
+												li.className = 'mui-table-view-cell';
+												li.innerHTML =
+													'<a class="mui-navigate-right" onclick=dkgq("' +
+													lah3.url +
+													'")>' +
+													lah3.title + '-----' + lah3.author +
+													'</a>';
+												table.appendChild(li);
+												var ia = ia + 1
+
+
+											}
+
+											plus.nativeUI.closeWaiting();
+										}, 1000);
+
+									} else {
+										mui.toast('搜索失败！');
+										plus.nativeUI.closeWaiting();
+									}
+
+								},
+								error: function(xhr, type, errorThrown) {
+									mui.toast('搜索失败！请检查网络！');
+									plus.nativeUI.closeWaiting();
+								}
+							});
+							plus.nativeUI.closeWaiting();
+						}
+
+					},
+					error: function(xhr, type, errorThrown) {
+						mui.toast('搜索失败！请检查网络！');
+						plus.nativeUI.closeWaiting();
+					}
+				});
+			})
+
+			var s = null;
+			var num = null;
+
+
+
+			function dkgq(urlc) { //播放音乐
+				s = plus.audio.createPlayer(urlc);
+				setTimeout(function() { //延时获取，否则可能没有返回长度
+					num = s.getDuration();
+					mui.toast('歌曲播放请求已发送。');
+
+				}, 100)
+
+				s.play(function() {
+					mui.toast('音乐播放完成啦~');
+				}, function(e) { //失败回调
+					alert("音乐播放失败: " + e.message + '，请尝试其他音频播放。');
+				});
+			}
+
+
+
+			function pause() { //暂停播放
+				s.pause();
+				mui.toast('已暂停');
+			}
+
+			function resume() { //恢复播放
+				s.resume();
+				mui.toast('已继续');
+			}
+
+			function stop() {
+				s.stop();
+				mui.toast('已停止');
+				document.getElementById('gqmz').innerHTML = '还没有播放呢~请选择要播放的内容~'
+				document.getElementById('gqtp').src = '../../../../images/icons/appmainlogo/logo.png'
+			}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,125 @@
+{
+    "@platforms" : [ "android", "iPhone", "iPad" ],
+    "id" : "H5D63B5E3",
+    /*应用的标识，创建应用时自动生成，勿手动修改*/
+    "name" : "星悦",
+    /*应用名称，程序桌面图标名称*/
+    "version" : {
+        "name" : "1.0.0",
+        /*应用版本名称*/
+        "code" : 1
+    },
+    "description" : "",
+    /*应用描述信息*/
+    "icons" : {
+        "72" : "icon.png"
+    },
+    "launch_path" : "index.html",
+    /*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
+    "developer" : {
+        "name" : "Inner Mongolia ChangGe Computer And Technology Studio",
+        /*开发者名称*/
+        "email" : "cgyxjs-why@foxmail.com",
+        /*开发者邮箱地址*/
+        "url" : ""
+    },
+    "permissions" : {},
+    "plus" : {
+        "splashscreen" : {
+            "autoclose" : true,
+            /*是否自动关闭程序启动界面，true表示应用加载应用入口页面后自动关闭；false则需调plus.navigator.closeSplashscreen()关闭*/
+            "waiting" : true
+        },
+        "runmode" : "liberate",
+        /*应用的首次启动运行模式，可取liberate或normal，liberate模式在第一次启动时将解压应用资源（Android平台File API才可正常访问_www目录）*/
+        "signature" : "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==",
+        /*可选，保留给应用签名，暂不使用*/
+        "distribute" : {
+            "apple" : {
+                "appid" : "",
+                /*iOS应用标识，苹果开发网站申请的appid，如io.dcloud.HelloH5*/
+                "mobileprovision" : "",
+                /*iOS应用打包配置文件*/
+                "password" : "",
+                /*iOS应用打包个人证书导入密码*/
+                "p12" : "",
+                /*iOS应用打包个人证书，打包配置文件关联的个人证书*/
+                "devices" : "universal",
+                /*iOS应用支持的设备类型，可取值iphone/ipad/universal*/
+                "frameworks" : [],
+                "idfa" : false
+            },
+            "google" : {
+                "packagename" : "com.imccats.cgkj.starhappylauncher",
+                /*Android应用包名，如io.dcloud.HelloH5*/
+                "keystore" : "",
+                /*Android应用打包使用的密钥库文件*/
+                "password" : "",
+                /*Android应用打包使用密钥库中证书的密码*/
+                "aliasname" : "",
+                /*Android应用打包使用密钥库中证书的别名*/
+                "permissions" : [
+                    "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CLEAR_APP_CACHE\"/>",
+                    "<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>",
+                    "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.VIBRATE\"/>",
+                    "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
+                    "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
+                ],
+                "minSdkVersion" : 21,
+                "targetSdkVersion" : 32,
+                "abiFilters" : [ "armeabi-v7a", "arm64-v8a", "x86" ],
+                "schemes" : "StarHappy,Sh,SH"
+            },
+            "orientation" : [ "portrait-primary", "portrait-secondary" ],
+            /*应用支持的方向，portrait-primary：竖屏正方向；portrait-secondary：竖屏反方向；landscape-primary：横屏正方向；landscape-secondary：横屏反方向*/
+            "icons" : {
+                "ios" : {
+                    "iphone" : {
+                        "app@2x" : "unpackage/res/icons/120x120.png",
+                        "app@3x" : "unpackage/res/icons/180x180.png",
+                        "notification@2x" : "unpackage/res/icons/40x40.png",
+                        "notification@3x" : "unpackage/res/icons/60x60.png",
+                        "settings@2x" : "unpackage/res/icons/58x58.png",
+                        "settings@3x" : "unpackage/res/icons/87x87.png",
+                        "spotlight@2x" : "unpackage/res/icons/80x80.png",
+                        "spotlight@3x" : "unpackage/res/icons/120x120.png"
+                    },
+                    "ipad" : {
+                        "app" : "unpackage/res/icons/76x76.png",
+                        "app@2x" : "unpackage/res/icons/152x152.png",
+                        "notification" : "unpackage/res/icons/20x20.png",
+                        "notification@2x" : "unpackage/res/icons/40x40.png",
+                        "proapp@2x" : "unpackage/res/icons/167x167.png",
+                        "settings" : "unpackage/res/icons/29x29.png",
+                        "settings@2x" : "unpackage/res/icons/58x58.png",
+                        "spotlight" : "unpackage/res/icons/40x40.png",
+                        "spotlight@2x" : "unpackage/res/icons/80x80.png"
+                    },
+                    "appstore" : "unpackage/res/icons/1024x1024.png"
+                },
+                "android" : {
+                    "hdpi" : "unpackage/res/icons/72x72.png",
+                    "xhdpi" : "unpackage/res/icons/96x96.png",
+                    "xxhdpi" : "unpackage/res/icons/144x144.png",
+                    "xxxhdpi" : "unpackage/res/icons/192x192.png"
+                }
+            },
+            "splashscreen" : {
+                "ios" : {
+                    "iphone" : {},
+                    "ipad" : {}
+                },
+                "android" : {},
+                "useOriginalMsgbox" : true
+            }
+        }
+    },
+    "screenOrientation" : [ "portrait-primary", "portrait-secondary" ]
+}
