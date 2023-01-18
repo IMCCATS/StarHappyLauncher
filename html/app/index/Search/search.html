@@ -53,7 +53,14 @@
 		<script src="../../../../js/mui.js"></script>
 		<script src="../../../../js/mui.min.js"></script>
 		<script type="text/javascript">
-			mui.init()
+			if (window.localStorage.getItem("sc") != null) {
+				var arr1 = JSON.parse(localStorage.getItem("shoucang"));
+			}
+			mui.init({
+				swipeBack: false,
+				
+
+			});
 			mui.plusReady(function() {
 				var lrc1 = null
 				var self = plus.webview.currentWebview();
@@ -127,7 +134,7 @@
 												var li = document.createElement('li');
 												li.className = 'mui-table-view-cell';
 												li.innerHTML =
-													'<a class="mui-navigate-right" onclick=dkgq("' +
+													'<a class="mui-navigate-right" onclick=dkym("' +
 													lah3.url +
 													'")>' +
 													lah3.title + '-----' + lah3.author +
@@ -169,16 +176,22 @@
 
 
 			function dkgq(urlc) { //播放音乐
+				plus.nativeUI.showWaiting("加载中...");
 				s = plus.audio.createPlayer(urlc);
-				setTimeout(function() { //延时获取，否则可能没有返回长度
+				setTimeout(function() { 
 					num = s.getDuration();
+					
 					mui.toast('歌曲播放请求已发送。');
 
 				}, 100)
+				setTimeout(function(){
+					plus.nativeUI.closeWaiting();
+				},1000)
 
 				s.play(function() {
 					mui.toast('音乐播放完成啦~');
 				}, function(e) { //失败回调
+				plus.nativeUI.closeWaiting();
 					alert("音乐播放失败: " + e.message + '，请尝试其他音频播放。');
 				});
 			}
@@ -201,6 +214,8 @@
 				document.getElementById('gqmz').innerHTML = '还没有播放呢~请选择要播放的内容~'
 				document.getElementById('gqtp').src = '../../../../images/icons/appmainlogo/logo.png'
 			}
+
+
 		</script>
 	</body>
 

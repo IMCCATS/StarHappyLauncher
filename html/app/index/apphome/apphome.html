@@ -218,6 +218,7 @@
 							</div>
 						</div>
 
+
 						<!-- 主体部分mbody -->
 						<div class="mui-card">
 							<!--页眉，放置标题-->
@@ -270,6 +271,9 @@
 
 
 	<script type="text/javascript" charset="utf-8">
+		if (window.localStorage.getItem("sc") != null) {
+			var arr1 = JSON.parse(localStorage.getItem("shoucang"));
+		}
 		var gallery = mui('.mui-slider');
 		gallery.slider({
 			interval: 6000 //自动轮播周期，若为0则不自动播放，默认为0；5000即5秒。
@@ -285,7 +289,10 @@
 		});
 
 		function jzgq() {
+			document.getElementById('zxgqbu').disabled = true;
+			document.getElementById('jzgqbu').disabled = true;
 			plus.nativeUI.showWaiting("加载歌曲中...");
+			
 			mui.ajax(
 				'https://api.gmit.vip/Api/MusicList?format=json&url=https://music.163.com/playlist?id=3778678&userid=513720957', {
 					data: {},
@@ -297,7 +304,7 @@
 							var lah = data.data
 							var table = document.body.querySelector('#zjgq');
 							var cells = document.body.querySelectorAll('.mui-table-view-cell');
-							for (var i = cells.length, len = i + 99; i < len; i++) {
+							for (var i = cells.length, len = i + 100; i < len; i++) {
 								var lah3 = lah[ia + 1]
 								var li = document.createElement('li');
 								li.className = 'mui-table-view-cell';
@@ -315,42 +322,48 @@
 						mui.alert('网络链接失败，请检查网络链接状况！');
 					}
 				});
-				mui.ajax(
-					'https://api.gmit.vip/Api/MusicList?format=json&url=https://music.163.com/playlist?id=3779629&userid=513720957', {
-						data: {},
-						type: 'get', //HTTP请求类型
-						timeout: 10000, //超时时间设置为10秒；
-						success: function(data) {
-							setTimeout(function() {
-								var ia = -1
-								var lah = data.data
-								var table = document.body.querySelector('#zxgq');
-								var cells = document.body.querySelectorAll('.mui-table-view-cell');
-								for (var i = cells.length, len = i + 99; i < len; i++) {
-									var lah3 = lah[ia + 1]
-									var li = document.createElement('li');
-									li.className = 'mui-table-view-cell';
-									li.innerHTML =
-										'<a class="mui-navigate-right" onclick=dkym("' + lah3.song_id +
-										'")>' +
-										lah3.name + '-----' + lah3.artist + '</a>';
-									table.appendChild(li);
-									var ia = ia + 1
-								}
-								plus.nativeUI.closeWaiting();
-								mui('#jzgqbu').button('reset');
-							}, 1000);
-						},
-						error: function(xhr, type, errorThrown) {
+			mui.ajax(
+				'https://api.gmit.vip/Api/MusicList?format=json&url=https://music.163.com/playlist?id=3779629&userid=513720957', {
+					data: {},
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						setTimeout(function() {
+							var ia = -1
+							var lah = data.data
+							var table = document.body.querySelector('#zxgq');
+							var cells = document.body.querySelectorAll('.mui-table-view-cell');
+							for (var i = cells.length, len = i + 100; i < len; i++) {
+								var lah3 = lah[ia + 1]
+								var li = document.createElement('li');
+								li.className = 'mui-table-view-cell';
+								li.innerHTML =
+									'<a class="mui-navigate-right" onclick=dkym("' + lah3.song_id +
+									'")>' +
+									lah3.name + '-----' + lah3.artist + '</a>';
+								table.appendChild(li);
+								var ia = ia + 1
+							}
+							document.getElementById('zxgqbu').disabled = false;
+							document.getElementById('jzgqbu').disabled = false;
 							plus.nativeUI.closeWaiting();
-							mui.alert('网络链接失败，请检查网络链接状况！');
-						}
-					});
+							mui('#jzgqbu').button('reset');
+						}, 1000);
+					},
+					error: function(xhr, type, errorThrown) {
+						plus.nativeUI.closeWaiting();
+						document.getElementById('zxgqbu').disabled = false;
+						document.getElementById('jzgqbu').disabled = false;
+						mui.alert('网络链接失败，请检查网络链接状况！');
+					}
+				});
 		}
 		mui.init({
 			swipeBack: false,
+			
 
 		});
+		
 
 		function enterSearch(event) {
 			if (event.keyCode == 13) {
@@ -461,6 +474,7 @@
 			document.getElementById('gqmz').innerHTML = '还没有播放呢~请选择要播放的内容~'
 			document.getElementById('gqtp').src = '../../../../images/icons/appmainlogo/logo.png'
 		}
+		
 	</script>
 
 </html>

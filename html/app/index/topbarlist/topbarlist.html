@@ -5,13 +5,11 @@
 		<meta charset="utf-8">
 		<meta name="viewport"
 			content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title>首页</title>
+		<title>榜单</title>
 		<script src="../../../../js/mui.min.js"></script>
 		<script src="../../../../js/mui.js"></script>
 		<link href="../../../../css/mui.min.css" rel="stylesheet" />
-		<script type="text/javascript" charset="utf-8">
-			mui.init();
-		</script>
+
 	</head>
 
 	<style>
@@ -86,19 +84,336 @@
 			/* 页面能滚动 */
 			overflow: scroll;
 		}
+
+		.mui-slider-item {
+			height: 50px;
+		}
+
+		/* 调整主体部分距离标题栏的距离 */
+		.mui-content-shange {
+			margin-top: 10px;
+			padding-top: 49px !important;
+			background-color: #ffffff;
+		}
+
+		/* 栅格高度 */
+		.myicon {
+			height: 70px;
+		}
+
+		/* 栅格内超链接的高度 */
+		.myicon a {
+			/* 需要将超链接调成block形式,不然设置的宽度对其没有作用 */
+			display: block;
+			width: 50px;
+			height: 50px;
+			/* 	background-color: red; */
+			/* 使盒子居中显示 */
+			margin: 0 auto;
+			color: white;
+			/* icon可以使用文本居中属性 */
+			text-align: center;
+		}
+
+		/* 栅格内超链接内图标的高度 */
+		.myicon a .icon {
+			margin-top: 10px;
+			font-size: 30px;
+			display: block;
+		}
+
+		/* 栅格内超链接内文字的样式 */
+		.myicon a .word {
+			/* 需要将span调成block形式,不然设置的高度对其没有作用 */
+			display: block;
+			font-size: 12px;
+			margin-top: 5px;
+			color: #000000;
+		}
+
+		.yemian {
+			background-color: #ffffff;
+		}
+
+
+		.gundong {
+			overflow: scroll;
+		}
+
+		.mui-card-footer {
+			text-align: center;
+		}
 	</style>
 
 	<body>
-		<div class="title-bg">
-			<div class="title-arrow">
-				<img src="../../../../images/icons/appmainlogo/logo.png" class="title-img" />
+		<div class="yemian">
+			<div class="title-bg">
+				<div class="title-arrow">
+					<img src="../../../../images/icons/appmainlogo/logo.png" class="title-img" />
+				</div>
+				<div class="title-tx">星悦·榜单</div>
 			</div>
-			<div class="title-tx">星悦·榜单</div>
+
+
+			<div class="gundong">
+				<div class="mui-scroll-wrapper" style="margin-top: 30px;">
+					<div class="mui-scroll">
+
+						<div class="mui-content">
+							<!-- 主体部分mbody -->
+							<div class="mui-card" style="margin-top: 30px;">
+								<!--页眉，放置标题-->
+								<div class="mui-card-header mui-card-media">
+									<img src="../../../../images/icons/appmainlogo/logo.png" id="gqtp" />
+									<div class="mui-media-body">
+										当前正在播放
+										<p id="gqmz">还没有播放呢~请选择要播放的内容~</p>
+
+									</div>
+								</div>
+								<!--内容区-->
+								<div class="mui-card-footer">
+									<button type="button" class="mui-btn mui-btn-primary" onclick="resume()">继续</button>
+									<button type="button" class="mui-btn mui-btn-primary" onclick="pause()">暂停</button>
+									<button type="button" class="mui-btn mui-btn-primary" onclick="stop()">停止</button>
+								</div>
+								<div class="mui-card-footer">歌词、进度条等内容正在制作啦~如果下方内容点击无响应的话，请您停止滑动页面，再点击一次即可。
+								</div>
+							</div>
+
+							<div class="mui-card">
+								<div class="mui-card-footer">随机·飙升榜<button type="button"
+										data-loading-icon-position="right" class="mui-btn" onclick="jzgq()"
+										id="jzgqbu">刷新</button></div>
+								<div class="mui-card-content">
+									<ul class="mui-table-view" id="bsgq">
+
+									</ul>
+								</div>
+								<div class="mui-card-footer">一周·网络热歌榜<button type="button"
+										data-loading-icon-position="right" class="mui-btn" onclick="jzgqzx()"
+										id="zxgqbu">刷新</button></div>
+								<div class="mui-card-content">
+									<ul class="mui-table-view" id="wlgq">
+
+									</ul>
+								</div>
+								<div class="mui-card-footer" id="zlmy">内容获取中...</div>
+							</div>
+
+
+
+						</div>
+					</div>
+
+				</div>
+			</div>
 		</div>
-
-		<p>榜单</p>
-
-
 	</body>
+
+
+
+
+	<script type="text/javascript" charset="utf-8">
+		var gallery = mui('.mui-slider');
+		gallery.slider({
+			interval: 6000 //自动轮播周期，若为0则不自动播放，默认为0；5000即5秒。
+		});
+		mui('.mui-scroll-wrapper').scroll({
+			scrollY: true, //是否竖向滚动
+			scrollX: false, //是否横向滚动
+			startX: 0, //初始化时滚动至x
+			startY: 0, //初始化时滚动至y
+			indicators: false, //是否显示滚动条
+			deceleration: 0.0006, //阻尼系数,系数越小滑动越灵敏
+			bounce: false //是否启用回弹
+		});
+
+		function jzgq() {
+			document.getElementById('jzgqbu').disabled = true;
+			document.getElementById('zxgqbu').disabled = true;
+			plus.nativeUI.showWaiting("加载歌曲中...");
+			mui.ajax(
+				'https://api.gmit.vip/Api/MusicList?format=json&url=https://music.163.com/playlist?id=19723756&userid=513720957', {
+					data: {},
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						setTimeout(function() {
+							var ia = -1
+							var lah = data.data
+							var table = document.body.querySelector('#bsgq');
+							var cells = document.body.querySelectorAll('.mui-table-view-cell');
+							for (var i = cells.length, len = i + 100; i < len; i++) {
+								var lah3 = lah[ia + 1]
+								var li = document.createElement('li');
+								var a = ia + 2
+								li.className = 'mui-table-view-cell';
+								li.innerHTML =
+									'<a class="mui-navigate-right" onclick=dkym("' + lah3.song_id +
+									'")>' + a +':'+
+									lah3.name + '-----' + lah3.artist + '</a>';
+								table.appendChild(li);
+								var ia = ia + 1
+							}
+							mui('#jzgqbu').button('reset');
+						}, 1000);
+					},
+					error: function(xhr, type, errorThrown) {
+						mui.alert('网络链接失败，请检查网络链接状况！');
+					}
+				});
+			mui.ajax(
+				'https://api.gmit.vip/Api/MusicList?format=json&url=https://music.163.com/playlist?id=6723173524&userid=513720957', {
+					data: {},
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						setTimeout(function() {
+							var ia = -1
+							var lah = data.data
+							var table = document.body.querySelector('#wlgq');
+							var cells = document.body.querySelectorAll('.mui-table-view-cell');
+							for (var i = cells.length, len = i + 15; i < len; i++) {
+								var lah3 = lah[ia + 1]
+								var li = document.createElement('li');
+								var a = ia + 2
+								li.className = 'mui-table-view-cell';
+								li.innerHTML =
+									'<a class="mui-navigate-right" onclick=dkym("' + lah3.song_id +
+									'")>' + a +':'+
+									lah3.name + '-----' + lah3.artist + '</a>';
+								table.appendChild(li);
+								var ia = ia + 1
+							}
+							document.getElementById('jzgqbu').disabled = false;
+							document.getElementById('zxgqbu').disabled = false;
+							plus.nativeUI.closeWaiting();
+							mui('#jzgqbu').button('reset');
+						}, 1000);
+					},
+					error: function(xhr, type, errorThrown) {
+						document.getElementById('jzgqbu').disabled = false;
+						document.getElementById('zxgqbu').disabled = false;
+						plus.nativeUI.closeWaiting();
+						mui.alert('网络链接失败，请检查网络链接状况！');
+					}
+				});
+		}
+		mui.init({
+			swipeBack: false,
+
+		});
+
+		function enterSearch(event) {
+			if (event.keyCode == 13) {
+				var keyword = document.getElementById('searchInput').value;
+				mui.openWindow({
+					id: 'html/app/index/Search/search.html',
+					url: '../Search/search.html',
+					show: {
+						aniShow: 'pop-in'
+					},
+					extras: { //extras里面的就是参数了
+						keyword: keyword
+					},
+					waiting: {
+						autoShow: true, //自动显示等待框，默认为true
+					}
+				});
+
+
+			}
+		}
+	</script>
+
+
+	<script type="text/javascript">
+		mui.plusReady(function() {
+			jzgq()
+			mui.ajax('https://zj.v.api.aa1.cn/api/wenan-zl/?type=json', {
+				data: {},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'get', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data) {
+					document.getElementById('zlmy').innerHTML = data.msg;
+				},
+				error: function(xhr, type, errorThrown) {
+					mui.alert('网络链接失败，请检查网络链接状况！');
+				}
+			});
+		})
+
+		function dkym(url) {
+			plus.nativeUI.showWaiting("加载中...");
+			mui.ajax('https://api.gmit.vip/Api/Netease', {
+				data: {
+					format: 'json',
+					id: url
+				},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'get', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data) {
+
+					if (data.msg = "解析成功") {
+						var lah = data.data;
+						document.getElementById('gqtp').src = lah.pic;
+						document.getElementById('gqmz').innerHTML = lah.title;
+						dkgq(lah.url);
+					} else {
+						plus.nativeUI.closeWaiting();
+						mui.toast('解析失败：官方网站返回付费请求，本应用不支持播放。');
+					}
+
+				},
+				error: function(xhr, type, errorThrown) {
+					mui.toast('播放失败！请检查网络！');
+				}
+			});
+
+		}
+		var s = null;
+		var num = null;
+
+
+
+		function dkgq(urlc) { //播放音乐
+			s = plus.audio.createPlayer(urlc);
+			setTimeout(function() { //延时获取，否则可能没有返回长度
+				num = s.getDuration();
+				plus.nativeUI.closeWaiting();
+				mui.toast('歌曲播放请求已发送，音频正在加载中~');
+
+			}, 100)
+
+			s.play(function() {
+				mui.toast('音乐播放完成啦~');
+			}, function(e) { //失败回调
+				plus.nativeUI.closeWaiting();
+				alert("音乐播放失败: " + e.message + '，请尝试其他音频播放。');
+			});
+		}
+
+
+
+		function pause() { //暂停播放
+			s.pause();
+			mui.toast('已暂停');
+		}
+
+		function resume() { //恢复播放
+			s.resume();
+			mui.toast('已继续');
+		}
+
+		function stop() {
+			s.stop();
+			mui.toast('已停止');
+			document.getElementById('gqmz').innerHTML = '还没有播放呢~请选择要播放的内容~'
+			document.getElementById('gqtp').src = '../../../../images/icons/appmainlogo/logo.png'
+		}
+	</script>
 
 </html>
