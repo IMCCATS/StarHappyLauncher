@@ -389,6 +389,8 @@
 			}, 100)
 
 			s.play(function() {
+				document.getElementById('gqmz').innerHTML = '还没有播放呢~请选择要播放的内容~'
+				document.getElementById('gqtp').src = '../../../../images/icons/appmainlogo/logo.png'
 				mui.toast('音乐播放完成啦~');
 			}, function(e) { //失败回调
 				plus.nativeUI.closeWaiting();
