@@ -1,7 +1,7 @@
 {
     "@platforms" : [ "android", "iPhone", "iPad" ],
-    "id" : "H5D63B5E3",
-    /*应用的标识，创建应用时自动生成，勿手动修改*/
+    "id" : "HXXXXXXXXX",
+    /*应用的标识，创建应用时自动生成，勿手动修改，请重新生成*/
     "name" : "星悦",
     /*应用名称，程序桌面图标名称*/
     "version" : {
@@ -17,9 +17,9 @@
     "launch_path" : "index.html",
     /*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
     "developer" : {
-        "name" : "Inner Mongolia ChangGe Computer And Technology Studio",
+        "name" : "",
         /*开发者名称*/
-        "email" : "cgyxjs-why@foxmail.com",
+        "email" : "",
         /*开发者邮箱地址*/
         "url" : ""
     },
@@ -50,7 +50,7 @@
                 "idfa" : false
             },
             "google" : {
-                "packagename" : "com.imccats.cgkj.starhappylauncher",
+                "packagename" : "com.xingyue.starhappylauncher",
                 /*Android应用包名，如io.dcloud.HelloH5*/
                 "keystore" : "",
                 /*Android应用打包使用的密钥库文件*/
